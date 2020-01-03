@@ -1,0 +1,23 @@
+{
+  "name": "mltd_helper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DL9412/mltd_helper.git"
+  },
+  "author": "DL9412",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DL9412/mltd_helper/issues"
+  },
+  "homepage": "https://github.com/DL9412/mltd_helper#readme"
+}
