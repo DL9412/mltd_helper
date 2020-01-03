@@ -2,10 +2,26 @@
     <div class="calc">
         <van-nav-bar title="PT计算器" left-text="返回" left-arrow @click-left="routerback" />
         <div class="mainbox">
-            <van-cell-group>
-                <van-field v-model="username" label="用户名" placeholder="请输入用户名" />
-                <van-field v-model="password" label="密码" placeholder="请输入密码" />
+            <van-cell-group class="contentbox bw">
+                <van-field v-model.number="startScore" label="当前分数" input-align="right" />
+                <van-field v-model.number="targetScore" label="目标分数" input-align="right" />
+                <van-field v-model.number="startLvl" label="当前等级" input-align="right" />
+                <van-field v-model.number="startExp" label="当前经验" input-align="right" />
+                <van-field v-model.number="startEnergy" label="当前体力" input-align="right" />
+                <van-field v-model.number="startTicket" label="当前打歌券" input-align="right" />
+                <van-field v-model.number="startItem" label="当前道具" input-align="right" />
+                <van-field v-model.number="dayRemain" label="剩余天数" input-align="right" />
+                <van-switch-cell v-model="work" title="打工10倍打歌" input-align="right" />
+                <van-dropdown-menu>
+                    <van-dropdown-item v-model.number="multiNormal" title="普通打歌倍率"
+                        :options="[{ text: '1', value: 1 },{ text: '2', value: 2 }]" v-if="!work" />
+                    <van-dropdown-item v-model.number="multiEvent" title="活动打歌倍率"
+                        :options="[{ text: '1', value: 1 },{ text: '2', value: 2 },{ text: '3', value: 3 },{ text: '4', value: 4 }]" />
+                </van-dropdown-menu>
             </van-cell-group>
+            <div class="contentbox">
+                <van-button type="primary" size="large" @click="startCalc">开始计算</van-button>
+            </div>
         </div>
     </div>
 </template>
@@ -15,7 +31,12 @@
         NavBar,
         Cell,
         CellGroup,
-        Field
+        Field,
+        SwitchCell,
+        DropdownMenu,
+        DropdownItem,
+        Button,
+        Dialog
     } from 'vant'
     export default {
         name: "calc",
@@ -23,7 +44,12 @@
             [Cell.name]: Cell,
             [CellGroup.name]: CellGroup,
             [Field.name]: Field,
-            [NavBar.name]: NavBar
+            [NavBar.name]: NavBar,
+            [SwitchCell.name]: SwitchCell,
+            [DropdownMenu.name]: DropdownMenu,
+            [DropdownItem.name]: DropdownItem,
+            [Button.name]: Button,
+            [Dialog.name]: Dialog
         },
         data() {
             return {
@@ -162,6 +188,15 @@
                     }
                 }
                 this.resultDlg = true;
+                Dialog.alert({
+                    title: '计算结果',
+                    message: `打工次数 ${this.count.work}
+                                普通打歌 ${this.count.normal}
+                                活动打歌 ${this.count.event}
+                                消耗钻石 ${this.count.cost}
+                                最终等级 ${this.nowLvl}
+                                升级 ${this.nowLvl - this.startLvl}`
+                })
             },
             checkExp() {
                 if (this.nowExp >= this.nextLvlNeed) {
@@ -181,7 +216,12 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-    .mainbox{
-        padding: 20px 5%;
+    .bw {
+        background: white;
+    }
+
+    .contentbox {
+        margin: 20px 0;
+        padding: 10px 5%;
     }
 </style>

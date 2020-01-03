@@ -20,5 +20,12 @@
 </script>
 
 <style lang="scss">
-
+  html,body{
+    height: 100%;
+  }
+  #app{
+    height: 100%;
+    overflow: auto;
+    background: #ececec;
+  }
 </style>
