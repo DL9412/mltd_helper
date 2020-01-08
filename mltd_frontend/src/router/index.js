@@ -6,7 +6,12 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    redirect: "/nav"
+    redirect: "/navtop"
+  },
+  {
+    path: "/navtop",
+    name: "navtop",
+    component: () => import("../views/navtop.vue")
   },
   {
     path: "/calc",
@@ -14,9 +19,14 @@ const routes = [
     component: () => import("../views/calc.vue")
   },
   {
-    path: "/nav",
-    name: "nav",
-    component: () => import("../views/nav.vue")
+    path: "/event",
+    name: "event",
+    component: () => import("../views/event.vue")
+  },
+  {
+    path: "/eventdetail/:id",
+    name: "eventdetail",
+    component: () => import("../views/eventdetail.vue")
   }
 ];
 

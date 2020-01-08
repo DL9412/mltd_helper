@@ -1,9 +1,10 @@
 <template>
-  <div class="nav">
+  <div class="navtop">
     <div class="navtitle">
       
     </div>
     <van-cell title="计算器" arrow-direction="right" to="calc" />
+    <van-cell title="event" arrow-direction="right" to="event" />
   </div>
 </template>
 
@@ -14,7 +15,7 @@
   } from 'vant'
 
   export default {
-    name: 'nav',
+    name: 'navtop',
     components: {
       [Cell.name]: Cell,
       [CellGroup.name]: CellGroup
