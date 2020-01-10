@@ -4,12 +4,12 @@ import VueRouter from "vue-router";
 Vue.use(VueRouter);
 
 const routes = [
+  // {
+  //   path: "/",
+  //   redirect: "/index"
+  // },
   {
     path: "/",
-    redirect: "/navtop"
-  },
-  {
-    path: "/navtop",
     name: "navtop",
     component: () => import("../views/navtop.vue")
   },
