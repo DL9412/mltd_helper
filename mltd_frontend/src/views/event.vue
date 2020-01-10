@@ -65,7 +65,7 @@
         list:[],
         durationArr:[],
         filterDuration:0,
-        desc:false
+        desc:true
       }
     },
     watch: {

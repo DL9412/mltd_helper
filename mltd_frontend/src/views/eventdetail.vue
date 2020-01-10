@@ -1,11 +1,30 @@
 <template>
   <div class="event">
     <van-nav-bar title="活动详情" left-text="返回" left-arrow @click-left="routerback"></van-nav-bar>
-    {{$route.params.id}}
+    <van-cell-group title="最终档线图">
+      <van-collapse v-model="activeShow">
+        <van-collapse-item title="最终档线" name="1">
+          <canvas id="lastScoreChart" style="width: 100%;height: 300px;"></canvas>
+        </van-collapse-item>
+      </van-collapse>
+    </van-cell-group>
+    <van-cell-group title="档位趋势图">
+      <!-- <div v-for="(r, i) in rankLine" :key="i">
+        <van-cell :title="'Rank '+r"></van-cell>
+        <canvas :id="'rank'+r" style="width: 100%;height: 300px;"></canvas>
+      </div> -->
+      <van-collapse v-model="activeRank">
+        <van-collapse-item :title="'Rank '+r" :name="r" v-for="(r, i) in rankLine" :key="i">
+          <canvas :id="'rank'+r" style="width: 100%;height: 300px;"></canvas>
+        </van-collapse-item>
+      </van-collapse>
+    </van-cell-group>
   </div>
 </template>
 
 <script>
+  import moment from 'moment'
+  require('@antv/f2/lib/interaction/pan')
   import {
     NavBar,
     Cell,
@@ -17,7 +36,9 @@
     Button,
     Dialog,
     Tab,
-    Tabs
+    Tabs,
+    Collapse,
+    CollapseItem
   } from 'vant'
 
   export default {
@@ -33,59 +54,104 @@
       [Button.name]: Button,
       [Dialog.name]: Dialog,
       [Tab.name]: Tab,
-      [Tabs.name]: Tabs
+      [Tabs.name]: Tabs,
+      [Collapse.name]: Collapse,
+      [CollapseItem.name]: CollapseItem
     },
     data() {
       return {
-        eventType:3,
-        list:[],
-        durationArr:[],
-        filterDuration:0,
-        desc:false
+        activeShow: ['1'],
+        activeRank: [],
+        lastScoreArr: [],
+        mainArr: [],
+        rankTimeChart: {},
+        rankLine: [100, 2500, 5000, 10000, 25000]
       }
     },
-    watch: {
+    watch: {},
+    computed: {
+      eid() {
+        return this.$route.params.id;
+      }
     },
-    computed: {},
     methods: {
-      getevents(){
-        var url = `https://api.matsurihi.me/mltd/v1/events/?type=${this.eventType}`
+      getdetail() {
+        var url =
+          `https://api.matsurihi.me/mltd/v1/events/${this.eid}/rankings/logs/eventPoint/${this.rankLine.join(',')}`
         this.$axios.get(url)
-        .then((res) => {
-          this.durationArr = []
-          let durationTmpArr = []
-          res.data.forEach(item=>{
-            let startTime = new Date(item.schedule.beginDate);
-            let endTime = new Date(item.schedule.endDate);
-            item.duration = Math.floor((endTime-startTime)/1000/60/60/24);
-            durationTmpArr.push(item.duration);
-          });
-          let tmp = new Set(durationTmpArr);
-          durationTmpArr = this.$comm.quickSort([...tmp]);
-          durationTmpArr.forEach(i=>{
-            this.durationArr.push({
-              text:i,
-              value:i
-            })
-          })
-          if(this.desc){
-            res.data.reverse();
-          }
-          this.list = res.data;
-        }).catch((err) => {
-        });
+          .then((res) => {
+            this.mainArr = res.data;
+            this.setLastScoreChart();
+            this.setRankTimeChart();
+          }).catch((err) => {});
       },
       routerback() {
-          this.$router.replace('/')
+        this.$router.back()
+      },
+      setLastScoreChart() {
+        this.lastScoreArr = [];
+        this.mainArr.forEach(ele => {
+          this.lastScoreArr.push({
+            rank: String(ele.rank),
+            score: ele.data[ele.data.length - 1].score
+          })
+        });
+        this.lastScoreArr.reverse();
+        let chart = new this.$F2.Chart({
+          id: 'lastScoreChart',
+          pixelRatio: window.devicePixelRatio, // 指定分辨率
+          animate: true
+        });
+        chart.source(this.lastScoreArr);
+        chart.legend(false);
+        chart
+          .interval()
+          .position('rank*score')
+          .color('rank', ['#60acfc', '#32d3eb', '#5bc49f', '#feb64d', '#ff7c7c', '#9287e7']);
+        chart.render();
+      },
+      setRankTimeChart() {
+        this.$nextTick(() => {
+          this.rankLine.forEach((r, i) => {
+            let data = this.mainArr[i].data;
+            data.forEach(item => {
+              item.time = moment(item.summaryTime).format('YYYY-MM-DD HH:mm:ss')
+              delete item.summaryTime;
+            })
+            let charts = new this.$F2.Chart({
+              id: 'rank' + r,
+              pixelRatio: window.devicePixelRatio, // 指定分辨率
+              animate: true
+            });
+            charts.source(data, {
+              time: {
+                type: 'timeCat',
+                mask: 'MM-DD HH:mm'
+              }
+            });
+            charts.tooltip({
+              showCrosshairs: true,
+              showItemMarker: true,
+              onShow: function onShow(ev) {
+                const items = ev.items;
+                items[0].name = items[0].title;
+                items[0].value = items[0].value;
+              }
+            });
+            charts.line().position('time*score');
+            charts.render();
+          })
+        })
       }
     },
     mounted() {
-      console.log(this.$route.params.id);
+      this.activeRank = [...(this.rankLine)]
+      this.getdetail()
     },
   }
 </script>
 <style scoped>
-  .typeSelect{
+  .typeSelect {
     padding: 20px 20px;
   }
 </style>

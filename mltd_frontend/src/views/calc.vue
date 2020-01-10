@@ -1,7 +1,13 @@
 <template>
     <div class="calc">
         <van-nav-bar title="PT计算器" left-text="返回" left-arrow @click-left="routerback" />
-        <div class="mainbox">
+        <div class="typeSelect">
+            <van-tabs v-model="eventType">
+                <van-tab title="传统" name="0"></van-tab>
+                <van-tab title="Tour" name="1"></van-tab>
+            </van-tabs>
+        </div>
+        <div class="mainbox" v-if="eventType == 0">
             <van-cell-group class="contentbox bw">
                 <van-field v-model.number="startScore" label="当前分数" input-align="right" />
                 <van-field v-model.number="targetScore" label="目标分数" input-align="right" />
@@ -23,6 +29,9 @@
                 <van-button type="primary" size="large" @click="startCalc">开始计算</van-button>
             </div>
         </div>
+        <div class="mainbox" v-if="eventType == 1">
+            <div class="working">开发中...</div>
+        </div>
     </div>
 </template>
 
@@ -36,7 +45,9 @@
         DropdownMenu,
         DropdownItem,
         Button,
-        Dialog
+        Dialog,
+        Tab,
+        Tabs
     } from 'vant'
     export default {
         name: "calc",
@@ -49,10 +60,13 @@
             [DropdownMenu.name]: DropdownMenu,
             [DropdownItem.name]: DropdownItem,
             [Button.name]: Button,
-            [Dialog.name]: Dialog
+            [Dialog.name]: Dialog,
+            [Tab.name]: Tab,
+            [Tabs.name]: Tabs
         },
         data() {
             return {
+                eventType: 0,
                 startScore: 0, //初始分数
                 nowScore: 0, //当前分数
                 targetScore: 0, //目标分数
@@ -191,11 +205,11 @@
                 Dialog.alert({
                     title: '计算结果',
                     message: `打工次数 ${this.count.work}
-                                普通打歌 ${this.count.normal}
-                                活动打歌 ${this.count.event}
-                                消耗钻石 ${this.count.cost}
-                                最终等级 ${this.nowLvl}
-                                升级 ${this.nowLvl - this.startLvl}`
+普通打歌 ${this.count.normal}
+活动打歌 ${this.count.event}
+消耗钻石 ${this.count.cost}
+最终等级 ${this.nowLvl}
+升级 ${this.nowLvl - this.startLvl}`
                 })
             },
             checkExp() {
@@ -215,7 +229,7 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
+<style scoped>
     .bw {
         background: white;
     }
@@ -223,5 +237,12 @@
     .contentbox {
         margin: 20px 0;
         padding: 10px 5%;
+    }
+
+    .working{
+        padding: 30px 0;
+        text-align: center;
+        color: #999;
+        font-size: 16px;
     }
 </style>
