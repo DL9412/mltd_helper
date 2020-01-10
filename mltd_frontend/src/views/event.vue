@@ -73,7 +73,7 @@
     computed: {},
     methods: {
       getevents(){
-        var url = `https://api.matsurihi.me/mltd/v1/events/?type=${this.eventType}`
+        var url = `/api/mltd/v1/events/?type=${this.eventType}`
         this.$axios.get(url)
         .then((res) => {
           this.durationArr = []

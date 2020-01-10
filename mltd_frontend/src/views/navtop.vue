@@ -70,7 +70,7 @@
     methods: {
       getnow() {
         var url =
-          `https://api.matsurihi.me/mltd/v1/events/?at=${moment().format()}`
+          `/api/mltd/v1/events/?at=${moment().format()}`
         this.$axios.get(url)
           .then((res) => {
             if (res.data.length > 0) {

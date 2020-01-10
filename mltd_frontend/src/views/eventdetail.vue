@@ -77,7 +77,7 @@
     methods: {
       getdetail() {
         var url =
-          `https://api.matsurihi.me/mltd/v1/events/${this.eid}/rankings/logs/eventPoint/${this.rankLine.join(',')}`
+          `/api/mltd/v1/events/${this.eid}/rankings/logs/eventPoint/${this.rankLine.join(',')}`
         this.$axios.get(url)
           .then((res) => {
             this.mainArr = res.data;
