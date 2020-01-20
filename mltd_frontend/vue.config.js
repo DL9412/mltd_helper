@@ -95,12 +95,12 @@ module.exports = {
 
         proxy: {
             '/api': {
-                target: 'http://dev-passport.atman360.com/', //对应自己的接口
+                target: 'https://api.matsurihi.me/', //对应自己的接口
                 changeOrigin: true,
-                ws: true
-                // pathRewrite: {
-                //   '^/api': ''
-                // }
+                ws: true,
+                pathRewrite: {
+                    '^/api': '/'
+                }
             },
         },
 

@@ -50,8 +50,8 @@
             <div class="contentbox">
                 <van-button type="primary" size="large" @click="startCalc">开始计算</van-button>
             </div>
-            <tips :msg="['本计算仅供参考，可能与实际结果无法完全吻合','实际消耗大概会比计算的少一些吧...天知道多出来那些pt哪来的']"></tips>
         </div>
+        <tips :msg="['本计算仅供参考，可能与实际结果无法完全吻合','实际消耗大概会比计算的少一些吧...天知道多出来那些pt哪来的']"></tips>
     </div>
 </template>
 

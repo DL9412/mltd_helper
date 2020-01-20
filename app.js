@@ -7,7 +7,6 @@ app.use('/static',express.static('mltd_frontend/dist/static'));
 
 app.use('/api', function(req, res) {
     var url = 'https://api.matsurihi.me' + req.url;
-    console.log(url);
     req.pipe(request(url)).pipe(res);
 });
 

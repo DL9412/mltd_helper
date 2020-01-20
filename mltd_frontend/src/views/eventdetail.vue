@@ -8,7 +8,7 @@
         </van-collapse-item>
       </van-collapse>
     </van-cell-group>
-    <tips :msg="['数据来源 matsurihi.me,感谢日本同僚提供的数据接口']"></tips>
+    <tips :msg="['此图表为每个活动最后一次收集到的数据，对正在进行的活动同理，并非预测档线']"></tips>
     <van-cell-group title="档位趋势图">
       <!-- <div v-for="(r, i) in rankLine" :key="i">
         <van-cell :title="'Rank '+r"></van-cell>
@@ -20,6 +20,8 @@
         </van-collapse-item>
       </van-collapse>
     </van-cell-group>
+    <tips :msg="['数据来源 matsurihi.me,感谢日本同僚提供的数据接口']"></tips>
+
   </div>
 </template>
 
