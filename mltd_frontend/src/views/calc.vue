@@ -300,7 +300,6 @@
                 })
             },
             checkExp() {
-                console.log(this.nowExp,this.nextLvlNeed);
                 if (this.nowExp >= this.nextLvlNeed) {
                     this.nowExp -= this.nextLvlNeed;
                     this.nowLvl += 1;
