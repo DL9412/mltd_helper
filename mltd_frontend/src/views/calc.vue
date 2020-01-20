@@ -178,7 +178,6 @@
                 this.nowExp += (this.dayRemain || 0) * 1620; //每天offer给的经验
                 this.nowEnergy += (this.dayRemain || 0) * 288 //每天自然回复体力
                 this.nowProgress = 0;
-                console.log(this.nowItem);
                 this.calcMain();
             },
             calcMain() {
