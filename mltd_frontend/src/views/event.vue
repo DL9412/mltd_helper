@@ -26,6 +26,7 @@
         />
       </van-cell-group>
     </div>
+    <tips :msg="['数据来源 matsurihi.me,感谢日本同僚提供的数据接口']"></tips>
   </div>
 </template>
 
@@ -43,6 +44,7 @@
     Tab,
     Tabs
   } from 'vant'
+  import tips from '@/components/tips.vue'
 
   export default {
     name: 'event',
@@ -57,7 +59,8 @@
       [Button.name]: Button,
       [Dialog.name]: Dialog,
       [Tab.name]: Tab,
-      [Tabs.name]: Tabs
+      [Tabs.name]: Tabs,
+      tips
     },
     data() {
       return {

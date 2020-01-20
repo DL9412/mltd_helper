@@ -8,6 +8,7 @@
         </van-collapse-item>
       </van-collapse>
     </van-cell-group>
+    <tips :msg="['数据来源 matsurihi.me,感谢日本同僚提供的数据接口']"></tips>
     <van-cell-group title="档位趋势图">
       <!-- <div v-for="(r, i) in rankLine" :key="i">
         <van-cell :title="'Rank '+r"></van-cell>
@@ -40,6 +41,7 @@
     Collapse,
     CollapseItem
   } from 'vant'
+  import tips from '@/components/tips.vue'
 
   export default {
     name: 'event',
@@ -56,7 +58,8 @@
       [Tab.name]: Tab,
       [Tabs.name]: Tabs,
       [Collapse.name]: Collapse,
-      [CollapseItem.name]: CollapseItem
+      [CollapseItem.name]: CollapseItem,
+      tips
     },
     data() {
       return {

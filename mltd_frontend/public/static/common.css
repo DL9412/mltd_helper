@@ -1,0 +1,10 @@
+.tips{
+    text-align: left;
+    font-size: 12px;
+    padding: 0 20px;
+}
+.tips p{
+    padding: 0;
+    line-height: 20px;
+    color: #aaaaaa;
+}
