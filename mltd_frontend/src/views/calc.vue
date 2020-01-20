@@ -175,7 +175,7 @@
                 this.nowEnergy = this.startEnergy || 0;
                 this.nowItem = this.startItem || 0;
                 this.nowItem += (this.dayRemain || 0) * this.dailyItem; //每天给的道具
-                this.nowExp += (this.dayRemain || 0) * 1620; //每天offer给的经验
+                this.nowExp += (this.dayRemain || 0) * 1260; //每天offer给的经验，按每天9+9+3=21小时计算
                 this.nowEnergy += (this.dayRemain || 0) * 288 //每天自然回复体力
                 this.nowProgress = 0;
                 this.calcMain();
@@ -300,6 +300,7 @@
                 })
             },
             checkExp() {
+                console.log(this.nowExp,this.nextLvlNeed);
                 if (this.nowExp >= this.nextLvlNeed) {
                     this.nowExp -= this.nextLvlNeed;
                     this.nowLvl += 1;
