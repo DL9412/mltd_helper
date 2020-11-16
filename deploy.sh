@@ -1,3 +1,4 @@
+git pull
 cd ./mltd_frontend
 #rm -rf ./node_modules
 #rm -rf ./dist
